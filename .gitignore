@@ -2,6 +2,9 @@
 input
 testinput
 
+# Vim stuff
+*.swp
+
 # Prerequisites
 *.d
 

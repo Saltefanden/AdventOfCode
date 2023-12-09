@@ -1,6 +1,6 @@
 # Advent of code specific
 input
-testinput
+testinput*
 
 # Vim stuff
 *.swp

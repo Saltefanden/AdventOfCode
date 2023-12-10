@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 import sys
 
 
@@ -9,11 +10,15 @@ def main():
     part2(sys.argv[1])
 
 def part1(filename: str):
-    pass
+    with open(filename, "r") as f:
+        while( line:=f.readline().strip()):
+            pass
 
 
 def part2(filename: str):
-    pass
+    with open(filename, "r") as f:
+        while( line:=f.readline().strip()):
+            pass
 
 if __name__ == '__main__':
     main()

@@ -84,15 +84,13 @@ def part2(filename: str):
                         counter +=1
                     else:
                         xgrid[i][j] = 'O'
-        # print("\n".join(''.join(row) for row in grid))
-        print("\n".join(''.join(row) for row in xgrid))
-        print("\n".join(''.join(row) for row in xxgrid))
+
         print("Part 2: ", counter)
 
 
 def is_inner(xgrid, xxgrid, i, j):
-    nxs = [False,False,False,False]
-    for direction in range(4):
+    nxs = [False]
+    for direction in range(1):
 
         curr_coords = [i, j]
         squeezing = False
@@ -123,7 +121,6 @@ def is_inner(xgrid, xxgrid, i, j):
                 else: 
                     squeezing = "\\"
 
-    # print(nxs, all(nxs))            
     return all(nxs)
 
 def replaceS(grid, S_coords):

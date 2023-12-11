@@ -76,52 +76,50 @@ def part2(filename: str):
         xxgrid[S_coords[0]][S_coords[1]]= "x"
 
         counter = 0
-        for i, row in enumerate(xgrid): 
-            for j, col in enumerate(row): 
+        for i in range(len(xgrid)): 
+            for j in range(len(xgrid[0])): 
                 if xxgrid[i][j] != 'x':
                     if is_inner(xgrid, xxgrid, i, j):
-                        xgrid[i][j] = 'I'
                         counter +=1
-                    else:
-                        xgrid[i][j] = 'O'
 
         print("Part 2: ", counter)
 
 
 def is_inner(xgrid, xxgrid, i, j):
-    nxs = [False]
-    for direction in range(1):
+    nxs = False
+    dists = [j, i, len(xgrid)-i, len(xgrid[0])-j]
+    # Go in the direction shortest to the end
+    direction = dists.index(min(dists))
+    curr_coords = [i, j]
+    squeezing = False
+    while( is_valid(curr_coords := step(curr_coords, direction), xgrid) ) :
+        if at(xxgrid, curr_coords) != 'x':
+            continue
+        if at(xgrid, curr_coords) == "|":
+            if direction in [0, 3]:
+                nxs= not nxs
+        if at(xgrid, curr_coords) == "-":
+            if direction in [1, 2]:
+                nxs= not nxs
 
-        curr_coords = [i, j]
-        squeezing = False
-        while( is_valid(curr_coords := step(curr_coords, direction), xgrid)):
-            if at(xxgrid, curr_coords) != 'x':
-                continue
-            if at(xgrid, curr_coords) == "|":
-                if direction in [0, 3]:
-                    nxs[direction] = not nxs[direction]
-            if at(xgrid, curr_coords) == "-":
-                if direction in [1, 2]:
-                    nxs[direction] = not nxs[direction]
+        if at(xgrid, curr_coords) == "/":
+            if squeezing == "/":
+                nxs= not nxs
+                squeezing = False
+            elif squeezing == "\\":
+                squeezing = False
+            else: 
+                squeezing = "/"
+        if at(xgrid, curr_coords) == "\\":
+            if squeezing == "\\":
+                nxs= not nxs
+                squeezing = False
+            elif squeezing == "/":
+                squeezing = False
+            else: 
+                squeezing = "\\"
 
-            if at(xgrid, curr_coords) == "/":
-                if squeezing == "/":
-                    nxs[direction] = not nxs[direction]
-                    squeezing = False
-                elif squeezing == "\\":
-                    squeezing = False
-                else: 
-                    squeezing = "/"
-            if at(xgrid, curr_coords) == "\\":
-                if squeezing == "\\":
-                    nxs[direction] = not nxs[direction]
-                    squeezing = False
-                elif squeezing == "/":
-                    squeezing = False
-                else: 
-                    squeezing = "\\"
-
-    return all(nxs)
+    return nxs
 
 def replaceS(grid, S_coords):
     newdirs = set()
